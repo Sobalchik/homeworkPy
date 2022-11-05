@@ -1,72 +1,134 @@
-# laba_1
+# laba_3
+import collections
+
 
 def ex_1():
-    print("Enter numbers")
-    first_num = input("Enter first number: ")
-    second_num = input("Enter second number: ")
-    third_num = input("Enter third number: ")
-    if first_num == second_num and second_num == third_num:
-        print("3")
-        return
-    if first_num == second_num or first_num == third_num or second_num == third_num:
-        print("2")
-        return
+    line = input("Enter string: ")
+    count = 1
+    result = ""
+    for i in range(0, (len(line))):
+        if i == (len(line) - 1):
+            if count > 1:
+                result += line[i] + str(count)
+            else:
+                result += line[i]
+            print(result)
+            return
 
-    print("0")
+        if line[i] == line[i + 1]:
+            count = count + 1
+        else:
+            if count > 1:
+                result += line[i] + str(count)
+            else:
+                result += line[i]
+            count = 1
 
 
 def ex_2():
-    num = int(input("Enter number: "))
-    line = ""
-    for i in range(1, num):
-        line = line + str(i)
-        print(line)
+    line = input("Enter string: ")
+    result = ""
+    num = ""
+    for i in range(0, (len(line))):
+        if 65 <= ord(line[i]) <= 90 or 97 <= ord(line[i]) <= 122:
+
+            if i == (len(line) - 1):
+                result += line[i]
+                print(result)
+                return
+
+            if 48 <= ord(line[i + 1]) <= 57:
+                j = i
+                while line[j] != line[-1] and 48 <= ord(line[j + 1]) <= 57:
+                    num += line[j + 1]
+                    j += 1
+                j = 0
+                for j in range(0, int(num)):
+                    result += line[i]
+            else:
+                result += line[i]
+            num = ""
+
+    print(result)
 
 
 def ex_3():
-    num = int(input("Enter number: "))
-    position = int((num * 2 - 1) / 2)
-    for i in range(1, num + 1):
-        for j in range(position - i + 1):
-            print(end=" ")
-        for j in range(1, i * 2):
-            if j <= i:
-                print(j, end="")
-            else:
-                print(i - (j - i), end="")
-        for j in range(position - i + 1):
-            print(end=" ")
-        print()
+    line = input("Enter string: ")
+    print(collections.Counter(line.replace(" ", "")).most_common(3))
 
 
 def ex_4():
-    n = int(input("Enter n = "))
-    if n < 10:
-        kol = n * 2 - 1
-    elif n < 100:
-        kol = 2 * 9 - 1 + 2 * 2 * (n - 9) - 1
-    elif n < 1000:
-        kol = 2 * 9 - 1 + 2 * 2 * n - 1 + 3 * 2 * n - 1
-    f = False
-    if kol % 2 == 0:
-        f = True
-    string = ""
-    for i in range(1, n + 1):
-        for j in range(1, i * 2):
-            if j <= i:
-                string += str(j)
-                if f and j < 10:
-                    string += " "
+    one_to_nineteen = (u'ноль',
+                       u'один', u'два', u'три', u'четыре', u'пять', u'шесть', u'семь', u'восемь', u'девять',
+                       u'десять', u'одиннадцать', u'двенадцать', u'тринадцать', u'четырнадцать', u'пятнадцать',
+                       u'шестнадцать', u'семнадцать', u'восемнадцать', u'девятнадцать')
+
+    decs = ('', u'десять', u'двадцать', u'тридцать', u'сорок',
+            u'пятьдесят', u'шестьдесят', u'семьдесят', u'восемьдесят', u'девяносто')
+
+    hundreds = ('', u'сто', u'двести', u'триста', u'четыреста',
+                u'пятьсот', u'шестьсот', u'семьсот', u'восемьсот', u'девятьсот')
+
+    thousands = ('', u'одна тысяча', u'две тысячи', u'три тысячи', u'четыре тысячи')
+
+    def _one_convert(integer):
+        return one_to_nineteen[integer]
+
+    def _two_convert(integer, string):
+        if integer in range(20):
+            result = one_to_nineteen[integer]
+
+        else:
+            result = decs[int(string[0])]
+
+            if string[1] != '0':
+                result = u'%s %s' % (result, one_to_nineteen[int(string[1])])
+
+        return result
+
+    def convert(string):
+        length = len(string)
+        integer = int(string)
+
+        if length == 1:
+            result = _one_convert(integer)
+
+        elif length == 2:
+            result = _two_convert(integer, string)
+
+        elif length == 3:
+            result = hundreds[int(string[0])]
+
+            tail = string[-2:]
+
+            if tail != '00':
+                result = u'%s %s' % (result, convert(tail))
+
+        elif length in range(4, 7):
+            tail = convert(string[-3:])
+
+            str_head = string[:-3]
+            int_head = int(str_head)
+
+            if int_head in range(1, 5):
+                head = thousands[int_head]
+
             else:
-                string += str(i - (j - i))
-                if f and i - (j - i) < 10:
-                    string += " "
-        string = string.center(kol + 17, ' ')
-        print(string)
-        string = ""
+                head = u'%s тысяч' % (convert(str_head))
+
+            result = u'%s %s' % (head, tail)
+
+        else:
+            result = ''
+
+        return result.strip()
+
+    number = input("Enter number: ")
+    print(convert(number))
 
 
 if __name__ == '__main__':
     # ex_1()
     # ex_2()
-    ex_4()
+    # ex_3()
+      ex_4()
