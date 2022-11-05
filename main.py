@@ -1,72 +1,54 @@
-# laba_1
+# laba_4
 
 def ex_1():
-    print("Enter numbers")
-    first_num = input("Enter first number: ")
-    second_num = input("Enter second number: ")
-    third_num = input("Enter third number: ")
-    if first_num == second_num and second_num == third_num:
-        print("3")
-        return
-    if first_num == second_num or first_num == third_num or second_num == third_num:
-        print("2")
-        return
-
-    print("0")
+    num_list = [5, 6, 2, 7, 8, 9, 10, 3, 4]
+    result = []
+    for i in range(1, len(num_list)):
+        if num_list[i] > num_list[i - 1]:
+            result.append(num_list[i])
+    print(result)
 
 
 def ex_2():
-    num = int(input("Enter number: "))
-    line = ""
-    for i in range(1, num):
-        line = line + str(i)
-        print(line)
+    num_list = [5, 6, 2, 7, 8, 9, 10, 3, 4]
+    num_list[num_list.index(max(num_list))], num_list[num_list.index(min(num_list))] = num_list[num_list.index(
+        min(num_list))], num_list[num_list.index(max(num_list))]
+    print(num_list)
 
 
 def ex_3():
-    num = int(input("Enter number: "))
-    position = int((num * 2 - 1) / 2)
-    for i in range(1, num + 1):
-        for j in range(position - i + 1):
-            print(end=" ")
-        for j in range(1, i * 2):
-            if j <= i:
-                print(j, end="")
-            else:
-                print(i - (j - i), end="")
-        for j in range(position - i + 1):
-            print(end=" ")
-        print()
+    num_list_1 = [5, 6, 2, 7, 8, 9, 10, 3, 4]
+    num_list_2 = [4, 1, 3, 7, 4, 9, 6, 3, 1]
+    result = 0
+    unique_num_list_1 = list(set(num_list_1))
+    for i in range(0, len(unique_num_list_1)):
+        if unique_num_list_1[i] in num_list_2:
+            result += 1
+    print(result)
 
 
-def ex_4():
-    n = int(input("Enter n = "))
-    if n < 10:
-        kol = n * 2 - 1
-    elif n < 100:
-        kol = 2 * 9 - 1 + 2 * 2 * (n - 9) - 1
-    elif n < 1000:
-        kol = 2 * 9 - 1 + 2 * 2 * n - 1 + 3 * 2 * n - 1
-    f = False
-    if kol % 2 == 0:
-        f = True
-    string = ""
-    for i in range(1, n + 1):
-        for j in range(1, i * 2):
-            if j <= i:
-                string += str(j)
-                if f and j < 10:
-                    string += " "
-            else:
-                string += str(i - (j - i))
-                if f and i - (j - i) < 10:
-                    string += " "
-        string = string.center(kol + 17, ' ')
-        print(string)
-        string = ""
+def ex_4(string_list):
+    result = ''
+
+    counter = dict()
+    for i in range(len(string_list)):
+        if string_list[i] in counter:
+            counter[string_list[i]] += 1
+        else:
+            counter[string_list[i]] = 1
+
+    for key, value in counter.items():
+        result += str(value) + ' '
+
+    print(result)
+
 
 
 if __name__ == '__main__':
     # ex_1()
     # ex_2()
-    ex_4()
+    # ex_3()
+    list_1 = ['abc', 'bcd', 'abc', 'abd', 'abd', 'dcd', 'abc']
+    list_2 = ['aaa', 'bbb', 'ccc']
+    list_3 = ['abc', 'abc', 'abc']
+    ex_4(list_1)
