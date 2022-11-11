@@ -1,72 +1,61 @@
-# laba_1
+# laba_6
 
 def ex_1():
-    print("Enter numbers")
-    first_num = input("Enter first number: ")
-    second_num = input("Enter second number: ")
-    third_num = input("Enter third number: ")
-    if first_num == second_num and second_num == third_num:
-        print("3")
-        return
-    if first_num == second_num or first_num == third_num or second_num == third_num:
-        print("2")
-        return
+    f = open('input_1.txt', 'r')
+    with open("input_1.txt", "r") as f:
+        text = f.read()
+    numbers = []
+    for t in text.split():
+        numbers.append(int(t))
 
-    print("0")
+    result = 1
+    for i in range(len(numbers)):
+        result *= numbers[i]
+    print(result)
 
 
 def ex_2():
-    num = int(input("Enter number: "))
-    line = ""
-    for i in range(1, num):
-        line = line + str(i)
-        print(line)
+    f = open('input_2.txt', 'r')
+    with open("input_2.txt", "r") as f:
+        text = f.read()
+    numbers = []
+    for t in text.split():
+        numbers.append(int(t))
+    result = sorted(numbers)
+    string = ''
+    for i in range(len(numbers)):
+        string = string + str(result[i]) + ' '
+    with open("result_2.txt", "w") as f:
+        f.write(string)
 
 
 def ex_3():
-    num = int(input("Enter number: "))
-    position = int((num * 2 - 1) / 2)
-    for i in range(1, num + 1):
-        for j in range(position - i + 1):
-            print(end=" ")
-        for j in range(1, i * 2):
-            if j <= i:
-                print(j, end="")
-            else:
-                print(i - (j - i), end="")
-        for j in range(position - i + 1):
-            print(end=" ")
-        print()
+    names = dict()
+    f = open('input_3.txt', 'r')
+    with open("input_3.txt", "r") as f:
+        for line in f:
+            numbers = line[-2]
+            name = {line: int(numbers)}
+            names.update(name)
 
+    sorted_values = sorted(names.values())  # Сортировка словаря Python по значению
 
-def ex_4():
-    n = int(input("Enter n = "))
-    if n < 10:
-        kol = n * 2 - 1
-    elif n < 100:
-        kol = 2 * 9 - 1 + 2 * 2 * (n - 9) - 1
-    elif n < 1000:
-        kol = 2 * 9 - 1 + 2 * 2 * n - 1 + 3 * 2 * n - 1
-    f = False
-    if kol % 2 == 0:
-        f = True
-    string = ""
-    for i in range(1, n + 1):
-        for j in range(1, i * 2):
-            if j <= i:
-                string += str(j)
-                if f and j < 10:
-                    string += " "
-            else:
-                string += str(i - (j - i))
-                if f and i - (j - i) < 10:
-                    string += " "
-        string = string.center(kol + 17, ' ')
-        print(string)
-        string = ""
+    sorted_names = {}
+
+    for i in sorted_values:
+        for k in names.keys():
+            if names[k] == i:
+                sorted_names[k] = names[k]
+                break
+    string = ''
+    for key, value in sorted_names.items():
+        string = string + key
+
+    with open("result_3.txt", "w") as f:
+        f.write(string)
 
 
 if __name__ == '__main__':
     # ex_1()
     # ex_2()
-    ex_4()
+    ex_3()

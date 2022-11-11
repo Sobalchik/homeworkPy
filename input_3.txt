@@ -1,0 +1,6 @@
+Ivan Ivanov 5
+Alexander Alexandrovich 3
+Dmitrii Dmitrievich 6
+Alexey Alexeevich 2
+Andrey Andreevich 4
+Maxim Maximovich 1
