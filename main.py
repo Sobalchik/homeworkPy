@@ -49,10 +49,11 @@ def ex_3():
                 break
 
     keys = list(sorted_names.keys())
-    with open("result_3_yo.txt", "w") as f:
+    with open("result_3_young.txt", "w") as f:
         f.write(keys[0])
-    with open("result_3_eld.txt", "w") as f:
+    with open("result_3_elder.txt", "w") as f:
         f.write(keys[-1])
+
 
 
 if __name__ == '__main__':
